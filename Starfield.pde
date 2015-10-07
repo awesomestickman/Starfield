@@ -1,5 +1,5 @@
 
-Particle[] a = new Particle[20];
+Particle[] a = new Particle[200];
 
 
 //your code here
@@ -7,12 +7,22 @@ void setup()
 {
 	size(300,300);
 	background(0);
-	for(int i =1;i<a.length;i++){
+	for(int i =0;i<a.length;i++){
+
+        int generator=(int)(Math.random()*10);
+        if(generator==0){
+		a[i]=new OddballParticle();
+	    }
+	    else if(generator<4){
 
 
-		a[i]=new NormalParticle();
+		   a[i]=new JumboParticle();
+	     }
+	     else{
+	     	a[i]=new NormalParticle();
+	     }
 	}
-	a[0]=new OddballParticle();
+	
 }
 void draw()
 {
@@ -39,7 +49,10 @@ angle=(Math.random()*359)+1;
  public void move(){
 x=x+Math.cos(angle)*speed;
 y=y+Math.sin(angle)*speed;
+if(Math.abs(x-150)>150){
 
+	speed=speed*-1;
+}
 
  }
  public void show(){
@@ -69,19 +82,24 @@ speed=1;
 angle=(Math.random()*359)+1;
  }
  public void move(){
-x=x-Math.cos(angle)*speed;
-y=y-Math.sin(angle)*speed;
+x=x+Math.cos(angle)*speed;
+y=y+Math.sin(angle)*speed;
+angle+=0.05;
 
 
  }
  public void show(){
 fill(theColor);
-ellipse((float)x,(float)y, 20, 20);
+ellipse((float)x,(float)y, 10, 10);
 
  }
 }
 class JumboParticle extends NormalParticle //uses inheritance
 {
-	//your code here
+	public void show(){
+
+		fill(theColor);
+		ellipse((float)x,(float)y,10,10);
+	}
 }
 
